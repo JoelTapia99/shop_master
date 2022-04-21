@@ -23,11 +23,17 @@ a:hover{
 }
 
 .alert_green{
+    border: 1px solid green;
     color:green;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .alert_red{
-    color:red;
+    border: 1px solid darkred;
+    color:darkred;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 table{

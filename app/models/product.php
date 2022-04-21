@@ -30,7 +30,7 @@ class Product
 
     public function setIdCategoryProduct($id_category_product)
     {
-        $idCategory = $this->db->real_escape_string($id_category_product);
+        $idCategory                = $this->db->real_escape_string($id_category_product);
         $this->id_category_product = (int)$idCategory;
     }
 
@@ -120,5 +120,15 @@ class Product
             . "'{$this->getPriceProduct()}',  '{$this->getStockProduct()}', '{$this->getOferProduct()}', '{$this->getDateProduct()}', '{$this->getImgProduct()}')  ";
 
         return $this->db->query($sql);
+    }
+
+    public function delete()
+    {
+        if ($this->getIdProduct() != 1) {
+            $sql     = "DELETE FROM `categories` WHERE id_category = {$this->getIdProduct()}; ";
+            $deleted = $this->db->query($sql);
+            return $deleted ? true : false;
+        }
+        return false;
     }
 }

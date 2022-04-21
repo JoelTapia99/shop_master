@@ -27,7 +27,7 @@ class Category
     }
 
     public function getAll(){
-        $sql = "SELECT * FROM `categories` ORDER BY id_category DESC;";
+        $sql = "SELECT * FROM `categories` ORDER BY id_category ASC;";
         return $this->db->query($sql);
     }
 

@@ -14,10 +14,10 @@ class UserController
     public function save()
     {
         if (isset($_POST)) {
-            $name       = Utils::exists('name');
-            $lastname   = Utils::exists('lastname');
-            $email      = Utils::exists('email');
-            $password   = Utils::exists('password');
+            $name     = isset($_POST['name']) ? $_POST['name'] : false;
+            $lastname = isset($_POST['lastname']) ? $_POST['lastname'] : false;
+            $email    = isset($_POST['email']) ? $_POST['email'] : false;
+            $password = isset($_POST['password']) ? $_POST['password'] : false;
 
             if ($name && $lastname && $email && $password) {
                 $user = new User();
@@ -29,11 +29,7 @@ class UserController
 
                 $created = $user->create();
 
-                if ($created) {
-                    $_SESSION['register'] = 'complete';
-                } else {
-                    $_SESSION['register'] = 'fail';
-                }
+                $_SESSION['register'] = $created ? 'complete' : 'fail';
             } else {
                 $_SESSION['register'] = 'fail';
             }
