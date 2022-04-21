@@ -23,6 +23,12 @@ class Product
         return $this->id_product;
     }
 
+    public function setIdProduct($id_product)
+    {
+        $this->id_product = $id_product;
+        return $this;
+    }
+
     public function getIdCategoryProduct()
     {
         return $this->id_category_product;
@@ -125,7 +131,7 @@ class Product
     public function delete()
     {
         if ($this->getIdProduct() != 1) {
-            $sql     = "DELETE FROM `categories` WHERE id_category = {$this->getIdProduct()}; ";
+            $sql     = "DELETE FROM `products` WHERE id_product = {$this->getIdProduct()}; ";
             $deleted = $this->db->query($sql);
             return $deleted ? true : false;
         }

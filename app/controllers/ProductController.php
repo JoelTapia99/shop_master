@@ -72,7 +72,17 @@ class ProductController
     {
         Utils::isAdmin();
 
+        $id   = isset($_GET['id']) ? $_GET['id'] : false;
+        $user = isset($_SESSION['identity']) ? $_SESSION['identity'] : false;
 
+        if ($id && $user) {
+            $product = new Product();
+            $product->setIdProduct($id);
+            $deleted = $product->delete();
+
+            $_SESSION['deleted_product'] = $deleted ? 'complete' : 'fail';
+        }
+        header("Location: " . BASE_URL . "product/all");
     }
 
 }
