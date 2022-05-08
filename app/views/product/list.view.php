@@ -1,10 +1,6 @@
-<?php if (isset($_SESSION['deleted_product']) && $_SESSION['deleted_product'] == 'complete'): ?>
-    <strong class="alert_green">Producto Eliminado</strong>
-<?php elseif (isset($_SESSION['deleted_product']) && $_SESSION['deleted_product'] == 'fail'): ?>
-    <strong class="alert_red">Error al eliminar producto</strong>
-<?php endif; ?>
-
-<?php Session::deleteSession('deleted_product'); ?>
+<?php
+Session::printAlertSession('deleted_product');
+Session::deleteSession('deleted_product'); ?>
 
 <h1>Gestion de Productos</h1>
 
@@ -14,14 +10,22 @@
     <tr>
         <th>ID</th>
         <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Categoria</th>
     </tr>
     <?php
     while ($product = $products->fetch_object()): ?>
         <tr>
             <td> <?= $product->id_product; ?> </td>
             <td> <?= $product->name_product; ?> </td>
-            <td><a href="<?= BASE_URL . "product/editProduct&id=".$product->id_product ?>" class="button button-gestion">Editar</a></td>
-            <td><a href="<?= BASE_URL . "product/deleteProduct&id=".$product->id_product ?>" class="button button-gestion button-red">Eliminar</a></td>
+            <td> <?= $product->description_product; ?> </td>
+            <td> <?= $product->price_product; ?> </td>
+            <td> <?= $product->name_category; ?> </td>
+            <td><a href="<?= BASE_URL . "product/edit&id=" . $product->id_product ?>" class="button button-gestion">Editar</a>
+            </td>
+            <td><a href="<?= BASE_URL . "product/deleteProduct&id=" . $product->id_product ?>"
+                   class="button button-gestion button-red">Eliminar</a></td>
         </tr>
     <?php
     endwhile; ?>

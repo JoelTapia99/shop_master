@@ -48,9 +48,7 @@ class UserController
             $identity = $user->login();
             if (is_object($identity)) {
                 $_SESSION['identity'] = $identity;
-//                if ($identity->rol_user == 'admin') {
                 $_SESSION['rol'] = $identity->rol_user;
-//                }
             } else {
                 $_SESSION['error_login'] = 'Verifique sus datos';
             }

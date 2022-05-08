@@ -26,7 +26,6 @@ class Product
     public function setIdProduct($id_product)
     {
         $this->id_product = $id_product;
-        return $this;
     }
 
     public function getIdCategoryProduct()
@@ -112,17 +111,18 @@ class Product
 
     public function getAll()
     {
-        $sql = "SELECT * FROM products ORDER BY id_product DESC; ";
+        $sql = "SELECT p.*, c.name_category FROM `products` p INNER JOIN `categories` c ON c.id_category = p.id_category_product ORDER BY id_product DESC; ";
+
         return $this->db->query($sql);
     }
 
     public function create()
     {
         $sql = "INSERT INTO `products`( "
-            . "`id_product`,  `id_category_product`,                `name_product`,             `description_product`, "
-            . "`price_product`,               `stock_product`,              `ofer_product`,              `date_product`,             `img_product`) "
+            . "`id_product`,    `id_category_product`,  `name_product`, `description_product`, "
+            . "`price_product`, `stock_product`,  `ofer_product`,   `date_product`, `img_product`) "
             . "VALUES( "
-            . "null,          '{$this->getIdCategoryProduct()}',    '{$this->getNameProduct()}', '{$this->getDescriptionProduct()}', "
+            . "null, '{$this->getIdCategoryProduct()}', '{$this->getNameProduct()}', '{$this->getDescriptionProduct()}', "
             . "'{$this->getPriceProduct()}',  '{$this->getStockProduct()}', '{$this->getOferProduct()}', '{$this->getDateProduct()}', '{$this->getImgProduct()}')  ";
 
         return $this->db->query($sql);
@@ -136,5 +136,40 @@ class Product
             return $deleted ? true : false;
         }
         return false;
+    }
+
+    public function getProduct()
+    {
+        $sql     = "SELECT * FROM `products` WHERE id_product = {$this->getIdProduct()}; ";
+        $product = $this->db->query($sql);
+        return $product ? $product : false;
+    }
+
+    public function update()
+    {
+        $sql = "UPDATE `products` SET " .
+            "`id_category_product`  =   {$this->getIdCategoryProduct()}," .
+            "`name_product`         =   '{$this->getNameProduct()}', " .
+            "`description_product`  =   '{$this->getDescriptionProduct()}'," .
+            "`price_product`        =   {$this->getPriceProduct()}," .
+            "`stock_product`        =   {$this->getStockProduct()}," .
+            "`ofer_product`         =   {$this->getOferProduct()}," .
+            "`date_product`         =   {$this->getDateProduct()} ";
+
+        if ($this->getImgProduct() != '') {
+            $sql .= ", `img_product` = '{$this->getImgProduct()}' ";
+        }
+
+        $sql .= "WHERE `id_product` =  {$this->getIdProduct()}";
+
+//        return $sql;
+
+        return $update = $this->db->query($sql);
+    }
+
+    public function getFileDB()
+    {
+        $sql = "SELECT `img_product` FROM `products` WHERE id_product = {$this->getIdProduct()}";
+        return $file = $this->db->query($sql)->fetch_assoc();
     }
 }

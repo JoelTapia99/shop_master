@@ -24,5 +24,4 @@ class Utils
         $categories = new Category();
         return $categories->getAll();
     }
-
 }
